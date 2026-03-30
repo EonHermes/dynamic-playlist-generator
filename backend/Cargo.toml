@@ -1,0 +1,26 @@
+[package]
+name = "dynamic-playlist-generator"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+actix-web = "4.9"
+actix-cors = "0.7"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+rusqlite = { version = "0.32", features = ["bundled"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.10", features = ["v4", "serde"] }
+thiserror = "1.0"
+rubato = "0.14"
+hound = "3.5"
+rand = "0.8"
+rayon = "1.10"
+hex = "0.4"
+base64 = "0.22"
+percent-encoding = "2.3"
+url = "2.5"
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+tempfile = "3.14"

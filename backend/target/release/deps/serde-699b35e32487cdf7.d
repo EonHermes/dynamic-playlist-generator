@@ -1,0 +1,14 @@
+/home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/deps/serde-699b35e32487cdf7.d: /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/build/serde-7171e1569888df8b/out/private.rs
+
+/home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/deps/libserde-699b35e32487cdf7.rlib: /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/build/serde-7171e1569888df8b/out/private.rs
+
+/home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/deps/libserde-699b35e32487cdf7.rmeta: /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/build/serde-7171e1569888df8b/out/private.rs
+
+/home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/home/dl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/build/serde-7171e1569888df8b/out/private.rs:
+
+# env-dep:OUT_DIR=/home/dl/.openclaw/workspace-or/dynamic-playlist-generator/backend/target/release/build/serde-7171e1569888df8b/out
