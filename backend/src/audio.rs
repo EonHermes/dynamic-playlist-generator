@@ -280,19 +280,111 @@ pub fn compute_similarity(track_a: &Track, track_b: &Track) -> f64 {
         weights += 0.2;
     }
 
-    let mood_overlap = track_a.mood_tags.iter().filter(|tag| track_b.mood_tags.contains(tag)).count() as f64;
-    let mood_score = if !track_a.mood_tags.is_empty() && !track_b.mood_tags.is_empty() {
-        mood_overlap / ((track_a.mood_tags.len() + track_b.mood_tags.len()) as f64 / 2.0)
-    } else { 0.0 };
-    score += mood_score * 0.2;
-    weights += 0.2;
+    if !track_a.mood_tags.is_empty() && !track_b.mood_tags.is_empty() {
+        let mood_overlap = track_a.mood_tags.iter().filter(|tag| track_b.mood_tags.contains(tag)).count() as f64;
+        let mood_score = mood_overlap / ((track_a.mood_tags.len() + track_b.mood_tags.len()) as f64 / 2.0);
+        score += mood_score * 0.2;
+        weights += 0.2;
+    }
 
-    let activity_overlap = track_a.activity_tags.iter().filter(|tag| track_b.activity_tags.contains(tag)).count() as f64;
-    let activity_score = if !track_a.activity_tags.is_empty() && !track_b.activity_tags.is_empty() {
-        activity_overlap / ((track_a.activity_tags.len() + track_b.activity_tags.len()) as f64 / 2.0)
-    } else { 0.0 };
-    score += activity_score * 0.2;
-    weights += 0.2;
+    if !track_a.activity_tags.is_empty() && !track_b.activity_tags.is_empty() {
+        let activity_overlap = track_a.activity_tags.iter().filter(|tag| track_b.activity_tags.contains(tag)).count() as f64;
+        let activity_score = activity_overlap / ((track_a.activity_tags.len() + track_b.activity_tags.len()) as f64 / 2.0);
+        score += activity_score * 0.2;
+        weights += 0.2;
+    }
 
     if weights > 0.0 { score / weights } else { 0.0 }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::models::Track;
+
+    #[test]
+    fn test_similarity_identical_tracks() {
+        let track = Track::new("Song".to_string(), "Artist".to_string(), 180.0);
+        let similarity = compute_similarity(&track, &track);
+        assert!(similarity.abs() < 1e-6);
+    }
+
+    #[test]
+    fn test_similarity_same_features() {
+        let mut track_a = Track::new("A".to_string(), "X".to_string(), 200.0);
+        track_a.bpm = Some(120.0);
+        track_a.spectral_centroid = Some(500.0);
+        track_a.rms_energy = Some(0.3);
+        track_a.mood_tags = vec!["energetic".to_string()];
+        track_a.activity_tags = vec!["workout".to_string()];
+
+        let mut track_b = Track::new("B".to_string(), "Y".to_string(), 200.0);
+        track_b.bpm = Some(120.0);
+        track_b.spectral_centroid = Some(500.0);
+        track_b.rms_energy = Some(0.3);
+        track_b.mood_tags = vec!["energetic".to_string()];
+        track_b.activity_tags = vec!["workout".to_string()];
+
+        let similarity = compute_similarity(&track_a, &track_b);
+        assert!((similarity - 1.0).abs() < 0.01);
+    }
+
+    #[test]
+    fn test_similarity_different_tracks() {
+        let mut track_a = Track::new("A".to_string(), "X".to_string(), 200.0);
+        track_a.bpm = Some(140.0);
+        track_a.spectral_centroid = Some(600.0);
+        track_a.rms_energy = Some(0.4);
+        track_a.mood_tags = vec!["energetic".to_string()];
+        track_a.activity_tags = vec!["workout".to_string()];
+
+        let mut track_b = Track::new("B".to_string(), "Y".to_string(), 200.0);
+        track_b.bpm = Some(70.0);
+        track_b.spectral_centroid = Some(200.0);
+        track_b.rms_energy = Some(0.1);
+        track_b.mood_tags = vec!["calm".to_string()];
+        track_b.activity_tags = vec!["relax".to_string()];
+
+        let similarity = compute_similarity(&track_a, &track_b);
+        assert!(similarity < 0.5);
+    }
+
+    #[test]
+    fn test_similarity_no_features() {
+        let track_a = Track::new("A".to_string(), "X".to_string(), 200.0);
+        let track_b = Track::new("B".to_string(), "Y".to_string(), 200.0);
+        let similarity = compute_similarity(&track_a, &track_b);
+        assert_eq!(similarity, 0.0);
+    }
+
+    #[test]
+    fn test_similarity_partial_features() {
+        let mut track_a = Track::new("A".to_string(), "X".to_string(), 200.0);
+        track_a.bpm = Some(120.0);
+        track_a.mood_tags = vec!["energetic".to_string()];
+
+        let mut track_b = Track::new("B".to_string(), "Y".to_string(), 200.0);
+        track_b.bpm = Some(120.0);
+        track_b.mood_tags = vec!["energetic".to_string()];
+
+        let similarity = compute_similarity(&track_a, &track_b);
+        // With only BPM and mood, max achievable is 1.0 (both perfectly match)
+        assert!((similarity - 1.0).abs() < 0.01);
+    }
+
+    #[test]
+    fn test_analyze_empty_samples() {
+        let analyzer = AudioAnalyzer::new(44100);
+        let result = analyzer.analyze_samples(&[]);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_estimate_bpm_fallback() {
+        let analyzer = AudioAnalyzer::new(44100);
+        let silence = vec![0.0f32; 44100];
+        let bpm = analyzer.estimate_bpm(&silence);
+        assert_eq!(bpm, 120.0);
+    }
+}
+
